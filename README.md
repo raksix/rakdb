@@ -1,5 +1,6 @@
 # rakdb
-Boktan bir database boktan yarım saat sürmedi discorddakine bakmayın anime izliodum
+
+Uğlum Ğ
 
 ```
 const rakdb = require("rakdb")
