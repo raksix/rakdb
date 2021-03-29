@@ -1,0 +1,21 @@
+{
+  "name": "rakdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "is-promise": "^4.0.0",
+    "lowdb": "^1.0.0",
+    "parse-ms": "^2.1.0",
+    "pify": "^5.0.0",
+    "steno": "^1.0.0"
+  }
+}
