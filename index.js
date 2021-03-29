@@ -36,7 +36,7 @@ rakdb.getir = (payload) => {
                     var oldData = JSON.parse(data)
                     const index = oldData.map(a => a[0]._id[0]).indexOf(params)
                     oldData.splice(index, 1)
-                    if(index < 0){
+                    if (index < 0) {
                         return 'Kardeşim bu bulunamadı'
                     }
                     fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
@@ -56,6 +56,14 @@ rakdb.getir = (payload) => {
                 } catch (err) {
                     console.error(err)
                 }
+            },
+            degistir: function (params) {
+                try {
+                    const data = fs.readFileSync(payload + ".json", "utf-8")
+                    var oldData = JSON.parse(data)
+                    const index = oldData.map(a => a[0]._id[0]).indexOf(params)
+                    return 'güncellerim sonra aq'
+                } catch (err) { }
             }
         }
     } catch (err) {
