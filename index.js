@@ -52,19 +52,32 @@ rakdb.getir = (payload) => {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
                     var oldData = JSON.parse(data)
                     const index = oldData.map(a => a[0]._id[0]).indexOf(params)
-                    return oldData[index]
+
+                    return {
+                        veri: oldData[index][0],
+                        degistir: function (param) {
+                            try {
+                                const array = []
+                                array.push(param)
+                                oldData[index][0].data = array
+                                fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
+                                    if (err) console.error(err)
+                                })
+                                return oldData[index][0]
+                            } catch (err) { }
+                        },
+                        ekle: function(param) {
+                            oldData[index][0].data.push(param)
+                            fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return oldData[index][0]
+                        }
+                    }
                 } catch (err) {
                     console.error(err)
                 }
             },
-            degistir: function (params) {
-                try {
-                    const data = fs.readFileSync(payload + ".json", "utf-8")
-                    var oldData = JSON.parse(data)
-                    const index = oldData.map(a => a[0]._id[0]).indexOf(params)
-                    return 'güncellerim sonra aq'
-                } catch (err) { }
-            }
         }
     } catch (err) {
         console.error(err)
