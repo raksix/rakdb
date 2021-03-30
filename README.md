@@ -12,14 +12,20 @@ rakdb.yenidb("rakdb")
 const db = rakdb.getir("rakdb")
 
 payload = {
-    name: 'Raksix'
+    name: 'Raksix',
+    anan: []
 }
 
 console.log(db.ekle(payload))
 
 // [ { _id: [ '1617041556779' ], data: [ [Object] ] } ]
 
-console.log(db.bul("1617041556779"))
+
+db.idbul("1617041556779").veri
+
+db.idbul("1617041556779").sok('anan', { 'Ğ': 'Ğ' })
+
+db.idbul("1617041556779").cikar('anan', { 'Ğ': 'Ğ'})
 
 db.sil("1617041556779")
 

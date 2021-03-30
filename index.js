@@ -83,10 +83,10 @@ rakdb.getir = (payload) => {
                             const element = Object.keys(parmass2)
                             const values = Object.values(parmass2)
                             const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            cikarilacak[0].data.splice(idx, 1)
                             if (idx < 0) {
                                 return 'Kardeşim bu bulunamadı'
                             }
+                            cikarilacak[0][paramss].splice(idx, 1)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
@@ -159,10 +159,10 @@ rakdb.getir = (payload) => {
                             const element = Object.keys(parmass2)
                             const values = Object.values(parmass2)
                             const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            cikarilacak[0].data.splice(idx, 1)
                             if (idx < 0) {
                                 return 'Kardeşim bu bulunamadı'
                             }
+                            cikarilacak[0][paramss].splice(idx, 1)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
