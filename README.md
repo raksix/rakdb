@@ -2,6 +2,8 @@
 
 Uğlum Ğ
 
+3 5 Bug fix Ğ (anime kızları gerçektir)
+
 ```
 const rakdb = require("rakdb")
 
