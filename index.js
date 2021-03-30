@@ -8,6 +8,34 @@ rakdb.yenidb = (payload) => {
 }
 
 
+var addToObject = function (obj, key, value, index) {
+
+    var temp = {};
+    var i = 0;
+
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+
+            if (i === index && key && value) {
+                temp[key] = value;
+            }
+
+            temp[prop] = obj[prop];
+
+            i++;
+
+        }
+    }
+
+    if (!index && key && value) {
+        temp[key] = value;
+    }
+
+    return temp;
+
+};
+
+
 rakdb.getir = (payload) => {
     try {
         const data = fs.readFileSync(payload + '.json', 'utf8')
@@ -63,6 +91,16 @@ rakdb.getir = (payload) => {
                                 if (err) console.error(err)
                             })
                             return cikarilacak[0]
+                        },
+                        güncelle: function (element, value) {
+                            const oldVeri = oldData[index][0].data[0]
+                            oldData[index][0].data.splice(0, 1)
+                            var yeniveri = addToObject(oldVeri, element, value)
+                            oldData[index][0].data.push(yeniveri)
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return yeniveri
                         }
                     }
                 } catch (error) {
@@ -129,6 +167,16 @@ rakdb.getir = (payload) => {
                                 if (err) console.error(err)
                             })
                             return cikarilacak[0]
+                        },
+                        güncelle: function (element, value) {
+                            const oldVeri = oldData[index][0].data[0]
+                            oldData[index][0].data.splice(0, 1)
+                            var yeniveri = addToObject(oldVeri, element, value)
+                            oldData[index][0].data.push(yeniveri)
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return yeniveri
                         }
                     }
                 } catch (err) {
