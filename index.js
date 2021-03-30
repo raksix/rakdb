@@ -54,9 +54,7 @@ rakdb.getir = (payload) => {
                             const cikarilacak = oldData[index][0].data
                             const element = Object.keys(parmass2)
                             const values = Object.values(parmass2)
-                            console.log(element)
                             const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            console.log(idx)
                             cikarilacak[0].data.splice(idx, 1)
                             if (idx < 0) {
                                 return 'Kardeşim bu bulunamadı'
@@ -122,9 +120,7 @@ rakdb.getir = (payload) => {
                             const cikarilacak = oldData[index][0].data
                             const element = Object.keys(parmass2)
                             const values = Object.values(parmass2)
-                            console.log(element)
                             const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            console.log(idx)
                             cikarilacak[0].data.splice(idx, 1)
                             if (idx < 0) {
                                 return 'Kardeşim bu bulunamadı'
