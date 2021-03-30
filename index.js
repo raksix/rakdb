@@ -38,14 +38,15 @@ rakdb.getir = (payload) => {
                     return {
                         veri: oldData[index][0],
                         sok: function(paramss){
-                            oldData[index][0].data = paramss
+                            oldData[index][0].data.push(paramss)
                             fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
-                            return oldData[index]
+                            return oldData[index][0]
                         },
                         cikar: function(paramss){
-                            const anan = oldData[index][0].data.map(a => a).indexOf(paramss)
+                            const anan = oldData[index].map(a => a.data).includes({ anal: 'sex' })
+                            console.log(oldData[index][0].data.findIndex(a => a === paramss))
                             return anan
                         }
                     }
