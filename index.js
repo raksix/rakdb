@@ -21,13 +21,12 @@ rakdb.getir = (payload) => {
                     databro[0].data.push(payload2)
                     databro[0]._id.push(JSON.stringify(Date.now()))
                     oldData.push(databro)
-                    fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
-                        if (err) console.error(err)
+                    fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         return 'Başarılı'
                     })
                     return databro
                 } catch (err) {
-                    console.error(err)
+                    //console.error(err)
                 }
             },
             sil: function (params) {
@@ -39,12 +38,12 @@ rakdb.getir = (payload) => {
                     if (index < 0) {
                         return 'Kardeşim bu bulunamadı'
                     }
-                    fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
+                    fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         if (err) console.error(err)
                     })
                     return 'Başarılı Şekilde silindi';
                 } catch (err) {
-                    console.error(err)
+                    //console.error(err)
                 }
             },
             bul: function (params) {
@@ -60,15 +59,17 @@ rakdb.getir = (payload) => {
                                 const array = []
                                 array.push(param)
                                 oldData[index][0].data = array
-                                fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
+                                fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                     if (err) console.error(err)
                                 })
                                 return oldData[index][0]
-                            } catch (err) { }
+                            } catch (err) { 
+                                //console.log(err)
+                            }
                         },
                         ekle: function(param) {
                             oldData[index][0].data.push(param)
-                            fs.writeFile(payload + '.json', JSON.stringify(oldData), function (err, data) {
+                            fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return oldData[index][0]
