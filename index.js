@@ -22,36 +22,38 @@ rakdb.getir = (payload) => {
                     databro[0].data.push(payload2)
                     databro[0]._id.push(JSON.stringify(Date.now()))
                     oldData.push(databro)
-                    fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         return 'Başarılı'
                     })
                     return databro
                 } catch (err) {
                     //console.error(err)
+
                 }
             },
             bul: function (params) {
                 try {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
                     var oldData = JSON.parse(data)
-                    const index = oldData.map(a => a[0]._id[0]).indexOf(params._id[0])
+                    console.log(params)
+                    const index = oldData.map(a => a[0]._id[0]).indexOf(params[0]._id[0])
                     return {
                         veri: oldData[index][0],
                         sok: function(paramss){
                             oldData[index][0].data.push(paramss)
-                            fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return oldData[index][0]
                         },
-                        cikar: function(paramss){
+                        cikar: function(err, paramss){
                             const anan = oldData[index].map(a => a.data).includes({ anal: 'sex' })
                             console.log(oldData[index][0].data.findIndex(a => a === paramss))
                             return anan
                         }
                     }
                 } catch (error) {
-                    
+
                 }
             },
             sil: function (params) {
@@ -63,7 +65,7 @@ rakdb.getir = (payload) => {
                     if (index < 0) {
                         return 'Kardeşim bu bulunamadı'
                     }
-                    fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         if (err) console.error(err)
                     })
                     return 'Başarılı Şekilde silindi';
@@ -84,17 +86,17 @@ rakdb.getir = (payload) => {
                                 const array = []
                                 array.push(param)
                                 oldData[index][0].data = array
-                                fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                     if (err) console.error(err)
                                 })
                                 return oldData[index][0]
                             } catch (err) { 
-                                //console.log(err)
+
                             }
                         },
                         sok: function(param) {
                             oldData[index][0].data.push(param)
-                            fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return oldData[index][0]
@@ -102,11 +104,15 @@ rakdb.getir = (payload) => {
                     }
                 } catch (err) {
                     console.error(err)
+                    fs.writeFileSync(payload + '.json', JSON.stringify(veriman, null, 2), function (err, data) {
+                        if(err) throw err;
+                    })
                 }
             },
         }
     } catch (err) {
         //console.error(err)
+        
     }
 }
 
