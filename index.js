@@ -43,8 +43,8 @@ rakdb.getir = (payload) => {
                     }
                     return {
                         veri: oldData[index][0],
-                        sok: function(paramss){
-                            oldData[index][0].data.push(paramss)
+                        sok: function(paramss, params2){
+                            oldData[index][0].data[0][paramss].push(params2)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
