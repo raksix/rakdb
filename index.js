@@ -11,8 +11,9 @@ rakdb.yenidb = (payload) => {
 rakdb.getir = (payload) => {
     try {
         const data = fs.readFileSync(payload + '.json', 'utf8')
+        const veriman = JSON.parse(data)
         return {
-            veri: JSON.parse(data),
+            veri: veriman,
             ekle: function (payload2) {
                 try {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
@@ -27,6 +28,29 @@ rakdb.getir = (payload) => {
                     return databro
                 } catch (err) {
                     //console.error(err)
+                }
+            },
+            bul: function (params) {
+                try {
+                    const data = fs.readFileSync(payload + ".json", "utf-8")
+                    var oldData = JSON.parse(data)
+                    const index = oldData.map(a => a[0]._id[0]).indexOf(params._id[0])
+                    return {
+                        veri: oldData[index][0],
+                        sok: function(paramss){
+                            oldData[index][0].data = paramss
+                            fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return oldData[index]
+                        },
+                        cikar: function(paramss){
+                            const anan = oldData[index][0].data.map(a => a).indexOf(paramss)
+                            return anan
+                        }
+                    }
+                } catch (error) {
+                    
                 }
             },
             sil: function (params) {
@@ -46,7 +70,7 @@ rakdb.getir = (payload) => {
                     //console.error(err)
                 }
             },
-            bul: function (params) {
+            idbul: function (params) {
                 try {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
                     var oldData = JSON.parse(data)
@@ -67,7 +91,7 @@ rakdb.getir = (payload) => {
                                 //console.log(err)
                             }
                         },
-                        ekle: function(param) {
+                        sok: function(param) {
                             oldData[index][0].data.push(param)
                             fs.writeFile(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
@@ -81,7 +105,7 @@ rakdb.getir = (payload) => {
             },
         }
     } catch (err) {
-        console.error(err)
+        //console.error(err)
     }
 }
 
