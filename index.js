@@ -35,8 +35,12 @@ rakdb.getir = (payload) => {
                 try {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
                     var oldData = JSON.parse(data)
-                    console.log(params)
-                    const index = oldData.map(a => a[0]._id[0]).indexOf(params[0]._id[0])
+                    const element = Object.keys(params)
+                    const values = Object.values(params)
+                    const index = oldData.map(a => a[0].data[0][element]).indexOf(values[0])
+                    if(index < 0){
+                        return 'Bulunamadı'
+                    }
                     return {
                         veri: oldData[index][0],
                         sok: function(paramss){
@@ -78,7 +82,9 @@ rakdb.getir = (payload) => {
                     const data = fs.readFileSync(payload + ".json", "utf-8")
                     var oldData = JSON.parse(data)
                     const index = oldData.map(a => a[0]._id[0]).indexOf(params)
-
+                    if(index < 0){
+                        return 'Bulunamadı'
+                    }
                     return {
                         veri: oldData[index][0],
                         degistir: function (param) {
