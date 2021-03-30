@@ -23,9 +23,17 @@ console.log(db.ekle(payload))
 
 db.idbul("1617041556779").veri
 
-db.idbul("1617041556779").sok('anan', { 'Ğ': 'Ğ' })
+db.idbul("1617041556779").sok('anan', { Ğ: 'Ğ' }) // anan arrayına Ğ yi ekler
 
-db.idbul("1617041556779").cikar('anan', { 'Ğ': 'Ğ'})
+db.idbul('1617137760384').cikar('anan', { Ğ: 'Ğ' }) // anan arrayından Ğ yi çıkartır
+
+db.idbul('1617137760384').güncelle('baban', []) // baban diye array oluşturur
+
+db.idbul('1617137760384').güncelle('name', 'Furkan') // name'i Furkan ile değiştir
+
+// Bu fonksiyonlar bul() fonksiyonun da da geçerlidir.
+
+db.bul({ name: 'Raksix' }).veri // veri tabanında name elementi Raksix olan veriyi bulur
 
 db.sil("1617041556779")
 
