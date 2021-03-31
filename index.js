@@ -48,11 +48,9 @@ var addToObject = function (obj, key, value, index) {
 
 
 rakdb.getir = (payload) => {
-    let yedekveri = []
     try {
         const data = fs.readFileSync(payload + '.json', 'utf8')
         const veriman = JSON.parse(data)
-        yedekveri.push(veriman)
         return {
             veri: veriman,
             ekle: function (payload2) {
