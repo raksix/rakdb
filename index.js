@@ -1,6 +1,12 @@
 const fs = require('fs');
 const rakdb = {}
 
+rakdb.format = (payload) => {
+    fs.writeFile(payload + ".json", '[]', function (err, data) {
+        if (err) throw err;
+    })
+}
+
 rakdb.yenidb = (payload) => {
     fs.writeFile(payload + ".json", '[]', function (err, data) {
         if (err) throw err;
@@ -37,9 +43,11 @@ var addToObject = function (obj, key, value, index) {
 
 
 rakdb.getir = (payload) => {
+    let yedekveri = []
     try {
         const data = fs.readFileSync(payload + '.json', 'utf8')
         const veriman = JSON.parse(data)
+        yedekveri.push(veriman)
         return {
             veri: veriman,
             ekle: function (payload2) {
@@ -194,11 +202,9 @@ rakdb.getir = (payload) => {
             }
         }
     } catch (err) {
-        //console.error(err)
-
+        // console.log(err)
     }
 }
-
 
 
 module.exports = rakdb;
