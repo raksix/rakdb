@@ -186,6 +186,12 @@ rakdb.getir = (payload) => {
                     })
                 }
             },
+            icindemi: function(key, value) {
+                const data = fs.readFileSync(payload + ".json", "utf-8")
+                var oldData = JSON.parse(data)
+                const index = oldData.map(a => a[0].data[0][key]).includes(value)
+                return index
+            }
         }
     } catch (err) {
         //console.error(err)
