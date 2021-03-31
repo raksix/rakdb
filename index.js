@@ -8,9 +8,14 @@ rakdb.format = (payload) => {
 }
 
 rakdb.yenidb = (payload) => {
-    fs.writeFile(payload + ".json", '[]', function (err, data) {
-        if (err) throw err;
-    })
+    try {
+        fs.readFileSync(payload + '.json', 'utf8')
+
+    } catch (error) {
+        fs.writeFile(payload + ".json", '[]', function (err, data) {
+            if (err) throw err;
+        })
+    }
 }
 
 
@@ -64,7 +69,6 @@ rakdb.getir = (payload) => {
                     return databro
                 } catch (err) {
                     //console.error(err)
-
                 }
             },
             bul: function (params) {
