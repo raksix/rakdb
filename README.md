@@ -35,7 +35,7 @@ db.idbul('1617137760384').güncelle('name', 'Furkan') // name'i Furkan ile deği
 
 db.bul({ name: 'Raksix' }).veri // veri tabanında name elementi Raksix olan veriyi bulur
 
-console.log(db.icindemi("name", "Furkan")) // veri tabanında Furkan diye name elementi var mı diye bakar 
+db.icindemi("name", "Furkan") // veri tabanında Furkan diye name elementi var mı diye bakar 
 
 db.sil("1617041556779")
 
