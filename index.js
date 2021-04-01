@@ -1,6 +1,10 @@
 const fs = require('graceful-fs')
 const steno = require('steno')
 const pify = require('pify');
+const unset = require('lodash/flow')
+const get = require('lodash/get')
+const set = require('lodash/set')
+
 const rakdb = {}
 
 rakdb.format = (payload) => {

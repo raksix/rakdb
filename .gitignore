@@ -3927,3 +3927,12 @@ node_modules/steno/package.json
 node_modules/steno/README.md
 db.json
 app2.js
+node_modules/wio.db/.eslintrc.json
+node_modules/wio.db/index.js
+node_modules/wio.db/package.json
+node_modules/wio.db/README.md
+node_modules/wio.db/esm/index.mjs
+node_modules/wio.db/src/Error.js
+node_modules/wio.db/src/main.js
+node_modules/wio.db/types/index.d.ts
+.vscode/settings.json
