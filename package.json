@@ -1,6 +1,6 @@
 {
   "name": "rakdb-beta",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "repository": "https://github.com/Raksix/rakdb",
@@ -8,7 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node app.js"
   },
-  "keywords": ["database", "Raksix", "json"],
+  "keywords": [
+    "database",
+    "Raksix",
+    "json"
+  ],
   "author": "Raksix",
   "license": "ISC",
   "dependencies": {
