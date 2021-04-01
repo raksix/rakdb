@@ -1,9 +1,5 @@
 const fs = require('graceful-fs')
 const pify = require('pify');
-const unset = require('lodash/flow')
-const get = require('lodash/get')
-const set = require('lodash/set');
-
 
 const rakdb = {}
 
@@ -46,6 +42,12 @@ var addToObject = function (obj, key, value, index) {
     return temp;
 };
 
+const kaydet = (db, data) => {
+    yaz(db + '.json', JSON.stringify(data, null, 2), function (err, data) {
+        return 'Başarılı'
+    })
+}
+
 
 rakdb.getir = (payload) => {
     const data = pify(fs).readFileSync(payload + '.json', 'utf8')
@@ -59,9 +61,7 @@ rakdb.getir = (payload) => {
                     databro.push(payload2)
                     var yeniveri = addToObject(databro[0], '_id', JSON.stringify(Date.now()))
                     oldData.push(yeniveri)
-                    yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                        return 'Başarılı'
-                    })
+                    kaydet(payload, oldData)
                     return databro
                 } catch (err) {
                     //console.error(err)
