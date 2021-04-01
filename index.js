@@ -1,10 +1,10 @@
 const fs = require('graceful-fs')
-const steno = require('steno')
 const pify = require('pify');
 const unset = require('lodash/flow')
 const get = require('lodash/get')
 const set = require('lodash/set');
-const { copyFileSync } = require('fs');
+
+
 const rakdb = {}
 
 rakdb.format = (payload) => {
@@ -13,7 +13,7 @@ rakdb.format = (payload) => {
     })
 }
 
-const yaz = pify(steno.writeFile)
+const yaz = pify(fs.writeFileSync)
 
 
 rakdb.yenidb = (payload) => {
@@ -199,7 +199,7 @@ rakdb.getir = (payload) => {
                 }
             },
             icindemi: function (key, value) {
-                const index = oldData.map(a => a[key]).includes(value)
+                const index = oldData.map(a => a) //.includes(value)
                 return index
             }
         }
