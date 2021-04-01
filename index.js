@@ -3,21 +3,21 @@ const pify = require('pify');
 
 const rakdb = {}
 
+const yaz = fs.writeFileSync
+
+
 rakdb.format = (payload) => {
-    fs.writeFile(payload + ".json", '[]', function (err, data) {
+    yaz(payload + ".json", '[]', function (err, data) {
         if (err) throw err;
     })
 }
-
-const yaz = pify(fs.writeFileSync)
-
 
 rakdb.yenidb = (payload) => {
     try {
         fs.readFileSync(payload + '.json', 'utf8')
 
     } catch (error) {
-        steno.writeFile(payload + ".json", '[]', function (err, data) {
+        yaz(payload + ".json", '[]', function (err, data) {
             if (err) throw err;
         })
     }
@@ -50,7 +50,7 @@ const kaydet = (db, data) => {
 
 
 rakdb.getir = (payload) => {
-    const data = pify(fs).readFileSync(payload + '.json', 'utf8')
+    const data = fs.readFileSync(payload + '.json', 'utf8')
     var oldData = JSON.parse(data)
     try {
         return {

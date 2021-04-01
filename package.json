@@ -8,11 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node app.js"
   },
-  "keywords": [],
+  "keywords": ["database", "Raksix", "json"],
   "author": "Raksix",
   "license": "ISC",
   "dependencies": {
-    "graceful-fs": "^4.2.6",
-    "pify": "^3.0.0"
+    "graceful-fs": "^4.2.6"
   }
 }

@@ -37,8 +37,7 @@ db.bul({ name: 'Raksix' }).veri // veri tabanında name elementi Raksix olan ver
 
 db.icindemi("name", "Furkan") // veri tabanında Furkan diye name elementi var mı diye bakar 
 
-db.sil("1617041556779")
-
+db.idbul('1617137760384').sil()
 ```
 
 # Bok Gibi Oldu
