@@ -12,6 +12,10 @@
   "author": "Raksix",
   "license": "ISC",
   "dependencies": {
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "graceful-fs": "^4.2.6",
+    "lowdb": "^1.0.0",
+    "pify": "^3.0.0",
+    "steno": "^0.4.4"
   }
 }

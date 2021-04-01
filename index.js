@@ -1,4 +1,6 @@
 const fs = require('fs');
+const steno = require('steno')
+const pify = require('pify');
 const rakdb = {}
 
 rakdb.format = (payload) => {
@@ -7,12 +9,16 @@ rakdb.format = (payload) => {
     })
 }
 
+const oku = pify(fs.readFile)
+const yaz = pify(steno.writeFile)
+
+
 rakdb.yenidb = (payload) => {
     try {
         fs.readFileSync(payload + '.json', 'utf8')
 
     } catch (error) {
-        fs.writeFile(payload + ".json", '[]', function (err, data) {
+        steno.writeFile(payload + ".json", '[]', function (err, data) {
             if (err) throw err;
         })
     }
@@ -50,18 +56,16 @@ var addToObject = function (obj, key, value, index) {
 rakdb.getir = (payload) => {
     try {
         const data = fs.readFileSync(payload + '.json', 'utf8')
-        const veriman = JSON.parse(data)
+        var oldData = JSON.parse(data)
         return {
-            veri: veriman,
+            veri: oldData,
             ekle: function (payload2) {
                 try {
-                    const data = fs.readFileSync(payload + ".json", "utf-8")
-                    var oldData = JSON.parse(data)
                     let databro = [{ _id: [], data: [] }]
                     databro[0].data.push(payload2)
                     databro[0]._id.push(JSON.stringify(Date.now()))
                     oldData.push(databro)
-                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                    yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         return 'Başarılı'
                     })
                     return databro
@@ -71,8 +75,6 @@ rakdb.getir = (payload) => {
             },
             bul: function (params) {
                 try {
-                    const data = fs.readFileSync(payload + ".json", "utf-8")
-                    var oldData = JSON.parse(data)
                     const element = Object.keys(params)
                     const values = Object.values(params)
                     const index = oldData.map(a => a[0].data[0][element]).indexOf(values[0])
@@ -119,8 +121,6 @@ rakdb.getir = (payload) => {
             },
             sil: function (params) {
                 try {
-                    const data = fs.readFileSync(payload + ".json", "utf-8")
-                    var oldData = JSON.parse(data)
                     const index = oldData.map(a => a[0]._id[0]).indexOf(params)
                     oldData.splice(index, 1)
                     if (index < 0) {
@@ -136,8 +136,6 @@ rakdb.getir = (payload) => {
             },
             idbul: function (params) {
                 try {
-                    const data = fs.readFileSync(payload + ".json", "utf-8")
-                    var oldData = JSON.parse(data)
                     const index = oldData.map(a => a[0]._id[0]).indexOf(params)
                     if (index < 0) {
                         return 'Bulunamadı'
@@ -197,8 +195,6 @@ rakdb.getir = (payload) => {
                 }
             },
             icindemi: function(key, value) {
-                const data = fs.readFileSync(payload + ".json", "utf-8")
-                var oldData = JSON.parse(data)
                 const index = oldData.map(a => a[0].data[0][key]).includes(value)
                 return index
             }
