@@ -10,7 +10,7 @@ rakdb.format = (payload) => {
 }
 
 const oku = pify(fs.readFile)
-const yaz = pify(steno.writeFileSync)
+const yaz = pify(steno.writeFile)
 
 
 rakdb.yenidb = (payload) => {
@@ -54,9 +54,9 @@ var addToObject = function (obj, key, value, index) {
 
 
 rakdb.getir = (payload) => {
+    const data = pify(fs).readFileSync(payload + '.json', 'utf8')
+    var oldData = JSON.parse(data)
     try {
-        const data = fs.readFileSync(payload + '.json', 'utf8')
-        var oldData = JSON.parse(data)
         return {
             veri: oldData,
             ekle: function (payload2) {
@@ -200,7 +200,9 @@ rakdb.getir = (payload) => {
             }
         }
     } catch (err) {
-        // console.log(err)
+        yaz(payload + ".json", JSON.stringify(oldData), function (err, data) {
+            if (err) throw err;
+        })
     }
 }
 
