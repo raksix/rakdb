@@ -182,6 +182,13 @@ rakdb.getir = (payload) => {
                                 if (err) console.error(err)
                             })
                             return yeniveri
+                        },
+                        sil: function (element, value){
+                            oldData.splice(index, 1)
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return 'Başarılı Şekilde silindi';
                         }
                     }
                 } catch (err) {
