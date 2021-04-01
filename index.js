@@ -199,7 +199,7 @@ rakdb.getir = (payload) => {
                 }
             },
             icindemi: function (key, value) {
-                const index = oldData.map(a => a[0].data[0][key]).includes(value)
+                const index = oldData.map(a => a[key]).includes(value)
                 return index
             }
         }
