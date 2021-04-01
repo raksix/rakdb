@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('graceful-fs')
 const steno = require('steno')
 const pify = require('pify');
 const rakdb = {}
@@ -10,7 +10,7 @@ rakdb.format = (payload) => {
 }
 
 const oku = pify(fs.readFile)
-const yaz = pify(steno.writeFile)
+const yaz = pify(steno.writeFileSync)
 
 
 rakdb.yenidb = (payload) => {
@@ -194,7 +194,7 @@ rakdb.getir = (payload) => {
                     })
                 }
             },
-            icindemi: function(key, value) {
+            icindemi: function (key, value) {
                 const index = oldData.map(a => a[0].data[0][key]).includes(value)
                 return index
             }
