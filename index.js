@@ -79,7 +79,7 @@ rakdb.getir = (payload) => {
                         veri: oldData[index],
                         sok: function (paramss, params2) {
                             oldData[index][paramss].push(params2)
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return oldData[index]
@@ -101,7 +101,7 @@ rakdb.getir = (payload) => {
                                 }
                                 oldData[index][paramss].splice(idx, 1)
                             }
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                  if (err) console.error(err)
                              })
                             return oldData[index]
@@ -110,14 +110,14 @@ rakdb.getir = (payload) => {
                             const oldVeri = oldData[index]
                             var yeniveri = addToObject(oldVeri, element, value)
                             oldData[index] = yeniveri
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return yeniveri
                         },
                         sil: function (element, value){
                             oldData.splice(index, 1)
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return 'Başarılı Şekilde silindi';
@@ -137,7 +137,7 @@ rakdb.getir = (payload) => {
                         veri: oldData[index],
                         sok: function (paramss, params2) {
                             oldData[index][paramss].push(params2)
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return oldData[index]
@@ -159,7 +159,7 @@ rakdb.getir = (payload) => {
                                 }
                                 oldData[index][paramss].splice(idx, 1)
                             }
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                  if (err) console.error(err)
                              })
                             return oldData[index]
@@ -169,14 +169,14 @@ rakdb.getir = (payload) => {
                             oldData.splice(index, 1)
                             var yeniveri = addToObject(oldVeri, element, value)
                             oldData[index] = yeniveri
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return yeniveri
                         },
                         sil: function (element, value){
                             oldData.splice(index, 1)
-                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return 'Başarılı Şekilde silindi';
