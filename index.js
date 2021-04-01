@@ -3,8 +3,8 @@ const steno = require('steno')
 const pify = require('pify');
 const unset = require('lodash/flow')
 const get = require('lodash/get')
-const set = require('lodash/set')
-
+const set = require('lodash/set');
+const { copyFileSync } = require('fs');
 const rakdb = {}
 
 rakdb.format = (payload) => {
@@ -13,7 +13,6 @@ rakdb.format = (payload) => {
     })
 }
 
-const oku = pify(fs.readFile)
 const yaz = pify(steno.writeFile)
 
 
@@ -65,10 +64,10 @@ rakdb.getir = (payload) => {
             veri: oldData,
             ekle: function (payload2) {
                 try {
-                    let databro = [{ _id: [], data: [] }]
-                    databro[0].data.push(payload2)
-                    databro[0]._id.push(JSON.stringify(Date.now()))
-                    oldData.push(databro)
+                    let databro = []
+                    databro.push(payload2)
+                    var yeniveri = addToObject(databro[0], '_id', JSON.stringify(Date.now()))
+                    oldData.push(yeniveri)
                     yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         return 'Başarılı'
                     })
@@ -81,110 +80,104 @@ rakdb.getir = (payload) => {
                 try {
                     const element = Object.keys(params)
                     const values = Object.values(params)
-                    const index = oldData.map(a => a[0].data[0][element]).indexOf(values[0])
+                    const index = oldData.map(a => a[element]).indexOf(values[0])
                     if (index < 0) {
                         return 'Bulunamadı'
                     }
                     return {
-                        veri: oldData[index][0],
+                        veri: oldData[index],
                         sok: function (paramss, params2) {
-                            oldData[index][0].data[0][paramss].push(params2)
+                            oldData[index][paramss].push(params2)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
-                            return oldData[index][0]
+                            return oldData[index]
                         },
                         cikar: function (paramss, parmass2) {
-                            const cikarilacak = oldData[index][0].data
-                            const element = Object.keys(parmass2)
-                            const values = Object.values(parmass2)
-                            const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            if (idx < 0) {
-                                return 'Kardeşim bu bulunamadı'
+                            const deger = String(parmass2)
+                            if (deger === "[object Object]") {
+                                var element = Object.keys(parmass2)
+                                var value = Object.values(parmass2)
+                                const idx = oldData[index][paramss].map(a => a[element]).indexOf(value[0])
+                                if (idx < 0) {
+                                    return 'Kardeşim bu bulunamadı'
+                                }
+                                oldData[index][paramss].splice(idx, 1)
+                            } else {
+                                const idx = oldData[index][paramss].map(a => a).indexOf(deger)
+                                if (idx < 0) {
+                                    return 'Kardeşim bu bulunamadı'
+                                }
+                                oldData[index][paramss].splice(idx, 1)
                             }
-                            cikarilacak[0][paramss].splice(idx, 1)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
-                            return cikarilacak[0]
+                                 if (err) console.error(err)
+                             })
+                            return oldData[index]
                         },
                         güncelle: function (element, value) {
-                            const oldVeri = oldData[index][0].data[0]
-                            oldData[index][0].data.splice(0, 1)
+                            const oldVeri = oldData[index]
                             var yeniveri = addToObject(oldVeri, element, value)
-                            oldData[index][0].data.push(yeniveri)
+                            oldData[index] = yeniveri
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
                             return yeniveri
+                        },
+                        sil: function (element, value){
+                            oldData.splice(index, 1)
+                            fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
+                                if (err) console.error(err)
+                            })
+                            return 'Başarılı Şekilde silindi';
                         }
                     }
                 } catch (error) {
 
                 }
             },
-            sil: function (params) {
-                try {
-                    const index = oldData.map(a => a[0]._id[0]).indexOf(params)
-                    oldData.splice(index, 1)
-                    if (index < 0) {
-                        return 'Kardeşim bu bulunamadı'
-                    }
-                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                        if (err) console.error(err)
-                    })
-                    return 'Başarılı Şekilde silindi';
-                } catch (err) {
-                    //console.error(err)
-                }
-            },
             idbul: function (params) {
                 try {
-                    const index = oldData.map(a => a[0]._id[0]).indexOf(params)
+                    const index = oldData.map(a => a._id).indexOf(params)
                     if (index < 0) {
                         return 'Bulunamadı'
                     }
                     return {
-                        veri: oldData[index][0],
-                        degistir: function (param) {
-                            try {
-                                const array = []
-                                array.push(param)
-                                oldData[index][0].data = array
-                                fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                    if (err) console.error(err)
-                                })
-                                return oldData[index][0]
-                            } catch (err) {
-
-                            }
-                        },
+                        veri: oldData[index],
                         sok: function (paramss, params2) {
-                            oldData[index][0].data[0][paramss].push(params2)
+                            oldData[index][paramss].push(params2)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
-                            return oldData[index][0]
+                            return oldData[index]
                         },
                         cikar: function (paramss, parmass2) {
-                            const cikarilacak = oldData[index][0].data
-                            const element = Object.keys(parmass2)
-                            const values = Object.values(parmass2)
-                            const idx = cikarilacak[0][paramss].map(a => a[element]).indexOf(values[0])
-                            if (idx < 0) {
-                                return 'Kardeşim bu bulunamadı'
+                            const deger = String(parmass2)
+                            if (deger === "[object Object]") {
+                                var element = Object.keys(parmass2)
+                                var value = Object.values(parmass2)
+                                const idx = oldData[index][paramss].map(a => a[element]).indexOf(value[0])
+                                if (idx < 0) {
+                                    return 'Kardeşim bu bulunamadı'
+                                }
+                                oldData[index][paramss].splice(idx, 1)
+                            } else {
+                                const idx = oldData[index][paramss].map(a => a).indexOf(deger)
+                                if (idx < 0) {
+                                    return 'Kardeşim bu bulunamadı'
+                                }
+                                oldData[index][paramss].splice(idx, 1)
                             }
-                            cikarilacak[0][paramss].splice(idx, 1)
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
-                            return cikarilacak[0]
+                                 if (err) console.error(err)
+                             })
+                            return oldData[index]
                         },
                         güncelle: function (element, value) {
-                            const oldVeri = oldData[index][0].data[0]
-                            oldData[index][0].data.splice(0, 1)
+                            const oldVeri = oldData[index]
+                            oldData.splice(index, 1)
                             var yeniveri = addToObject(oldVeri, element, value)
-                            oldData[index][0].data.push(yeniveri)
+                            oldData[index] = yeniveri
                             fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                                 if (err) console.error(err)
                             })
@@ -193,7 +186,7 @@ rakdb.getir = (payload) => {
                     }
                 } catch (err) {
                     console.error(err)
-                    fs.writeFileSync(payload + '.json', JSON.stringify(veriman, null, 2), function (err, data) {
+                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
                         if (err) throw err;
                     })
                 }
