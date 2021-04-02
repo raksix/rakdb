@@ -16,6 +16,7 @@
   "author": "Raksix",
   "license": "ISC",
   "dependencies": {
-    "graceful-fs": "^4.2.6"
+    "graceful-fs": "^4.2.6",
+    "pify": "^5.0.0"
   }
 }

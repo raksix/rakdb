@@ -1,8 +1,9 @@
 const fs = require('graceful-fs')
+const pify = require('pify')
 
 const rakdb = {}
 
-const yaz = fs.writeFileSync
+const yaz = pify(fs.writeFileSync)
 
 
 rakdb.format = (payload) => {
@@ -41,14 +42,14 @@ var addToObject = function (obj, key, value, index) {
     return temp;
 };
 
-const kaydet = (db, data) => {
-    yaz(db + '.json', JSON.stringify(data, null, 2), function (err, data) {
+const kaydet = async (db, data) => {
+    await yaz(db + '.json', JSON.stringify(data, null, 2), function (err, data) {
         return 'Başarılı'
     })
 }
 
 
-rakdb.getir = (payload) => {
+rakdb.getir =  (payload) => {
     const data = fs.readFileSync(payload + '.json', 'utf8')
     var oldData = JSON.parse(data)
     try {
