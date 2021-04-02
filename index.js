@@ -11,7 +11,7 @@ rakdb.format = (payload) => {
         if (err) throw err;
     })
 }
-
+    
 rakdb.yenidb = (payload) => {
     try {
         fs.readFileSync(payload + '.json', 'utf8')
