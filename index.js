@@ -52,8 +52,9 @@ const kaydet = async (db, data) => {
 
 rakdb.getir =  (payload) => {
     const data = fs.readFileSync(payload + '.json', 'utf8')
-    var oldData = JSON.parse(data)
     try {
+        var oldData = JSON.parse(data)
+        kaydet('~yedek', oldData)
         return {
             veri: oldData,
             ekle: function (payload2) {
@@ -65,7 +66,7 @@ rakdb.getir =  (payload) => {
                     kaydet(payload, oldData)
                     return databro
                 } catch (err) {
-                    //console.error(err)
+                    kaydet(payload, oldData)
                 }
             },
             bul: function (params) {
@@ -102,30 +103,24 @@ rakdb.getir =  (payload) => {
                                 }
                                 oldData[index][paramss].splice(idx, 1)
                             }
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                 if (err) console.error(err)
-                             })
+                            kaydet(payload, oldData)
                             return oldData[index]
                         },
                         güncelle: function (element, value) {
                             const oldVeri = oldData[index]
                             var yeniveri = addToObject(oldVeri, element, value)
                             oldData[index] = yeniveri
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
+                            kaydet(payload, oldData)
                             return yeniveri
                         },
                         sil: function (element, value){
                             oldData.splice(index, 1)
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
+                            kaydet(payload, oldData)
                             return 'Başarılı Şekilde silindi';
                         }
                     }
                 } catch (error) {
-
+                    kaydet(payload, oldData)
                 }
             },
             idbul: function (params) {
@@ -138,9 +133,7 @@ rakdb.getir =  (payload) => {
                         veri: oldData[index],
                         sok: function (paramss, params2) {
                             oldData[index][paramss].push(params2)
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
+                            kaydet(payload, oldData)
                             return oldData[index]
                         },
                         cikar: function (paramss, parmass2) {
@@ -160,9 +153,7 @@ rakdb.getir =  (payload) => {
                                 }
                                 oldData[index][paramss].splice(idx, 1)
                             }
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                 if (err) console.error(err)
-                             })
+                            kaydet(payload, oldData)
                             return oldData[index]
                         },
                         güncelle: function (element, value) {
@@ -170,24 +161,18 @@ rakdb.getir =  (payload) => {
                             oldData.splice(index, 1)
                             var yeniveri = addToObject(oldVeri, element, value)
                             oldData[index] = yeniveri
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
+                            kaydet(payload, oldData)
                             return yeniveri
                         },
                         sil: function (element, value){
                             oldData.splice(index, 1)
-                            yaz(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                                if (err) console.error(err)
-                            })
+                            kaydet(payload, oldData)
                             return 'Başarılı Şekilde silindi';
                         }
                     }
                 } catch (err) {
                     console.error(err)
-                    fs.writeFileSync(payload + '.json', JSON.stringify(oldData, null, 2), function (err, data) {
-                        if (err) throw err;
-                    })
+                    kaydet(payload, oldData)
                 }
             },
             icindemi: function (key, value) {
@@ -196,9 +181,8 @@ rakdb.getir =  (payload) => {
             }
         }
     } catch (err) {
-        yaz(payload + ".json", JSON.stringify(oldData), function (err, data) {
-            if (err) throw err;
-        })
+        const data = fs.readFileSync('~yedek.json', 'utf8')
+        kaydet(payload, JSON.parse(data))
     }
 }
 
